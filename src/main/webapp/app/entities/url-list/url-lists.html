@@ -1,0 +1,64 @@
+<div>
+    <h2>Url Lists</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="url-list.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Url List
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Long Url</span></th>
+                    <th><span>Short Url</span></th>
+                    <th><span>Visit Count</span></th>
+                    <th><span>User</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="urlList in vm.urlLists track by urlList.id">
+                    <td><a ui-sref="url-list-detail({id:urlList.id})">{{urlList.id}}</a></td>
+                    <td>{{urlList.longUrl}}</td>
+                    <td>{{urlList.shortUrl}}</td>
+                    <td>{{urlList.visitCount}}</td>
+                    <td>
+                        {{urlList.user.login}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="url-list-detail({id:urlList.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="url-list.edit({id:urlList.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="url-list.delete({id:urlList.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

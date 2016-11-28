@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Url List</span> {{vm.urlList.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Long Url</span></dt>
+        <dd>
+            <span>{{vm.urlList.longUrl}}</span>
+        </dd>
+        <dt><span>Short Url</span></dt>
+        <dd>
+            <span>{{vm.urlList.shortUrl}}</span>
+        </dd>
+        <dt><span>Visit Count</span></dt>
+        <dd>
+            <span>{{vm.urlList.visitCount}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{vm.urlList.user.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="url-list-detail.edit({id:vm.urlList.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>
