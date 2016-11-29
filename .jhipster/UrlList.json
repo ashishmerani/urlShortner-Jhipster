@@ -1,36 +1,20 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipName": "user",
-            "otherEntityName": "user",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "login",
-            "ownerSide": true
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "longUrl",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
         },
         {
             "fieldName": "shortUrl",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
         },
         {
             "fieldName": "visitCount",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "min"
-            ],
-            "fieldValidateRulesMin": "0"
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20161128180317",

@@ -95,8 +95,12 @@
                     resolve: {
                         entity: function () {
                             return {
+                            	
+                            	/*
+                            	 * Ashish added
+                            	 */
                                 longUrl: null,
-                                shortUrl: null,
+                                shortUrl: "asdf",
                                 visitCount: null,
                                 id: null
                             };

@@ -5,16 +5,17 @@
         .module('urlShortnerApp')
         .controller('UrlListDialogController', UrlListDialogController);
 
-    UrlListDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'UrlList', 'User'];
+    UrlListDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'UrlList'];
 
-    function UrlListDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, UrlList, User) {
+    function UrlListDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, UrlList) {
         var vm = this;
 
         vm.urlList = entity;
         vm.clear = clear;
+        vm.byteSize = DataUtils.byteSize;
+        vm.openFile = DataUtils.openFile;
         vm.save = save;
-        vm.users = User.query();
-
+        
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -26,6 +27,9 @@
         function save () {
             vm.isSaving = true;
             if (vm.urlList.id !== null) {
+            	vm.urlList.visitCount = 0;
+            	vm.urlList.shortUrl = "sample";
+            	
                 UrlList.update(vm.urlList, onSaveSuccess, onSaveError);
             } else {
                 UrlList.save(vm.urlList, onSaveSuccess, onSaveError);

@@ -19,6 +19,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -43,8 +44,8 @@ public class UrlListResourceIntTest {
     private static final String DEFAULT_SHORT_URL = "AAAAAAAAAA";
     private static final String UPDATED_SHORT_URL = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_VISIT_COUNT = 0;
-    private static final Integer UPDATED_VISIT_COUNT = 1;
+    private static final Integer DEFAULT_VISIT_COUNT = 1;
+    private static final Integer UPDATED_VISIT_COUNT = 2;
 
     @Inject
     private UrlListRepository urlListRepository;
@@ -110,42 +111,6 @@ public class UrlListResourceIntTest {
         assertThat(testUrlList.getLongUrl()).isEqualTo(DEFAULT_LONG_URL);
         assertThat(testUrlList.getShortUrl()).isEqualTo(DEFAULT_SHORT_URL);
         assertThat(testUrlList.getVisitCount()).isEqualTo(DEFAULT_VISIT_COUNT);
-    }
-
-    @Test
-    @Transactional
-    public void checkLongUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = urlListRepository.findAll().size();
-        // set the field null
-        urlList.setLongUrl(null);
-
-        // Create the UrlList, which fails.
-
-        restUrlListMockMvc.perform(post("/api/url-lists")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(urlList)))
-                .andExpect(status().isBadRequest());
-
-        List<UrlList> urlLists = urlListRepository.findAll();
-        assertThat(urlLists).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkShortUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = urlListRepository.findAll().size();
-        // set the field null
-        urlList.setShortUrl(null);
-
-        // Create the UrlList, which fails.
-
-        restUrlListMockMvc.perform(post("/api/url-lists")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(urlList)))
-                .andExpect(status().isBadRequest());
-
-        List<UrlList> urlLists = urlListRepository.findAll();
-        assertThat(urlLists).hasSize(databaseSizeBeforeTest);
     }
 
     @Test

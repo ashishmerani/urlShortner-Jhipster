@@ -4,7 +4,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -22,20 +21,16 @@ public class UrlList implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "long_url", nullable = false)
+    @Lob
+    @Column(name = "long_url")
     private String longUrl;
 
-    @NotNull
-    @Column(name = "short_url", nullable = false)
+    @Lob
+    @Column(name = "short_url")
     private String shortUrl;
 
-    @Min(value = 0)
     @Column(name = "visit_count")
     private Integer visitCount;
-
-    @ManyToOne
-    private User user;
 
     public Long getId() {
         return id;
@@ -82,19 +77,6 @@ public class UrlList implements Serializable {
 
     public void setVisitCount(Integer visitCount) {
         this.visitCount = visitCount;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public UrlList user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override

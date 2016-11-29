@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -41,15 +40,21 @@ public class UrlListResource {
      */
     @PostMapping("/url-lists")
     @Timed
-    public ResponseEntity<UrlList> createUrlList(@Valid @RequestBody UrlList urlList) throws URISyntaxException {
+    public ResponseEntity<UrlList> createUrlList(@RequestBody UrlList urlList) throws URISyntaxException {
         log.debug("REST request to save UrlList : {}", urlList);
         if (urlList.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("urlList", "idexists", "A new urlList cannot already have an ID")).body(null);
         }
+        /*
+         * Ashish added
+         */
         String longUrl = urlList.getLongUrl();
         String shortUrl = shortenUrl(longUrl);
         urlList.setShortUrl(shortUrl);
         urlList.setVisitCount(0);
+        /*
+         * Ashish added
+         */
         UrlList result = urlListRepository.save(urlList);
         return ResponseEntity.created(new URI("/api/url-lists/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("urlList", result.getId().toString()))
@@ -67,7 +72,7 @@ public class UrlListResource {
      */
     @PutMapping("/url-lists")
     @Timed
-    public ResponseEntity<UrlList> updateUrlList(@Valid @RequestBody UrlList urlList) throws URISyntaxException {
+    public ResponseEntity<UrlList> updateUrlList(@RequestBody UrlList urlList) throws URISyntaxException {
         log.debug("REST request to update UrlList : {}", urlList);
         if (urlList.getId() == null) {
             return createUrlList(urlList);
@@ -122,10 +127,9 @@ public class UrlListResource {
         urlListRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("urlList", id.toString())).build();
     }
-    
-    
-    
-    /*Shorten URL Logic */
+/*
+ * Ashish added
+ */
     public String shortenUrl(String longUrl){
 		/*
 		 * 1. convert longUrl into 36 bit hash value

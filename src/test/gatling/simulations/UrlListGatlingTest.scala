@@ -67,7 +67,7 @@ class UrlListGatlingTest extends Simulation {
             .exec(http("Create new urlList")
             .post("/api/url-lists")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "longUrl":"SAMPLE_TEXT", "shortUrl":"SAMPLE_TEXT", "visitCount":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "longUrl":null, "shortUrl":null, "visitCount":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_urlList_url"))).exitHereIfFailed
             .pause(10)

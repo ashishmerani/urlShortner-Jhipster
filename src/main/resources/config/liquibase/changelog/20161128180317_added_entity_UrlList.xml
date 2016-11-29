@@ -21,22 +21,18 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="long_url" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="long_url" type="clob">
+                <constraints nullable="true" />
             </column>
             
-            <column name="short_url" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="short_url" type="clob">
+                <constraints nullable="true" />
             </column>
             
             <column name="visit_count" type="integer">
                 <constraints nullable="true" />
             </column>
             
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
