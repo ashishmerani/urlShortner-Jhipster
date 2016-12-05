@@ -29,5 +29,9 @@
         function register () {
             $state.go('register');
         }
+        
+        function search(){
+        	
+        }
     }
 })();

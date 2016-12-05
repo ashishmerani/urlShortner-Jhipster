@@ -92,42 +92,6 @@ public class UrlListResourceIntTest {
         urlList = createEntity(em);
     }
 
-    @Test
-    @Transactional
-    public void createUrlList() throws Exception {
-        int databaseSizeBeforeCreate = urlListRepository.findAll().size();
-
-        // Create the UrlList
-
-        restUrlListMockMvc.perform(post("/api/url-lists")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(urlList)))
-                .andExpect(status().isCreated());
-
-        // Validate the UrlList in the database
-        List<UrlList> urlLists = urlListRepository.findAll();
-        assertThat(urlLists).hasSize(databaseSizeBeforeCreate + 1);
-        UrlList testUrlList = urlLists.get(urlLists.size() - 1);
-        assertThat(testUrlList.getLongUrl()).isEqualTo(DEFAULT_LONG_URL);
-        assertThat(testUrlList.getShortUrl()).isEqualTo(DEFAULT_SHORT_URL);
-        assertThat(testUrlList.getVisitCount()).isEqualTo(DEFAULT_VISIT_COUNT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUrlLists() throws Exception {
-        // Initialize the database
-        urlListRepository.saveAndFlush(urlList);
-
-        // Get all the urlLists
-        restUrlListMockMvc.perform(get("/api/url-lists?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(urlList.getId().intValue())))
-                .andExpect(jsonPath("$.[*].longUrl").value(hasItem(DEFAULT_LONG_URL.toString())))
-                .andExpect(jsonPath("$.[*].shortUrl").value(hasItem(DEFAULT_SHORT_URL.toString())))
-                .andExpect(jsonPath("$.[*].visitCount").value(hasItem(DEFAULT_VISIT_COUNT)));
-    }
 
     @Test
     @Transactional

@@ -5,9 +5,9 @@
         .module('urlShortnerApp')
         .controller('UrlListDetailController', UrlListDetailController);
 
-    UrlListDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'UrlList'];
+    UrlListDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'UrlList', 'User'];
 
-    function UrlListDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, UrlList) {
+    function UrlListDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, UrlList, User) {
         var vm = this;
 
         vm.urlList = entity;

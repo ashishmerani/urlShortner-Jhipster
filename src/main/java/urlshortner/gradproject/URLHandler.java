@@ -27,10 +27,12 @@ public class URLHandler {
 	 @Inject
 	private UrlListRepository urlListRepository;
 	
-	@RequestMapping("/URLShortner/short/*")
+	@RequestMapping("/short/*")
 	public ResponseEntity<String> handleshortURLMapping(HttpServletRequest request ) throws URISyntaxException{
 		String shortUrl = "http://localhost:8080"+request.getRequestURI().toString();
+		System.out.println(shortUrl);
 		List<UrlList> urlLists = urlListRepository.findAll();
+		
 		for(UrlList item: urlLists){
 			if(item.getShortUrl().contentEquals(shortUrl)){
 				String longUrl = item.getLongUrl();
@@ -45,6 +47,7 @@ public class URLHandler {
 				return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 			}
 		}
+		
 		 return new ResponseEntity<>("URL not Found", HttpStatus.BAD_REQUEST);
 		
 	}

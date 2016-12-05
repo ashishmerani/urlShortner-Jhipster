@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span>ID</span></th>
+      
                     <th><span>Long Url</span></th>
                     <th><span>Short Url</span></th>
                     <th><span>Visit Count</span></th>
@@ -27,22 +27,17 @@
             </thead>
             <tbody>
                 <tr ng-repeat="urlList in vm.urlLists track by urlList.id">
-                    <td><a ui-sref="url-list-detail({id:urlList.id})">{{urlList.id}}</a></td>
+                    
                     <td>{{urlList.longUrl}}</td>
-                    <td>{{urlList.shortUrl}}</td>
+                    <td><a href={{urlList.shortUrl}}>{{urlList.shortUrl}}</a></td>
                     <td>{{urlList.visitCount}}</td>
+
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="url-list-detail({id:urlList.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="url-list.edit({id:urlList.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm"></span>
                             </button>
                             <button type="submit"

@@ -5,9 +5,9 @@
         .module('urlShortnerApp')
         .controller('UrlListDialogController', UrlListDialogController);
 
-    UrlListDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'UrlList'];
+    UrlListDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'UrlList', 'User'];
 
-    function UrlListDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, UrlList) {
+    function UrlListDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, UrlList, User) {
         var vm = this;
 
         vm.urlList = entity;
@@ -15,7 +15,8 @@
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
         vm.save = save;
-        
+        vm.users = User.query();
+
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -26,11 +27,18 @@
 
         function save () {
             vm.isSaving = true;
+            console.log(vm.urlList.id);
             if (vm.urlList.id !== null) {
+            	console.log("beforee");
             	vm.urlList.visitCount = 0;
-            	vm.urlList.shortUrl = "sample";
+            	console.log("after count");
+            	vm.urlList.shortUrl = "sampleshortUrl";
+            	console.log("after url");
+            	vm.urlList.user = "sampleUser";
+            	console.log("after user");
             	
                 UrlList.update(vm.urlList, onSaveSuccess, onSaveError);
+                console.log("after save");
             } else {
                 UrlList.save(vm.urlList, onSaveSuccess, onSaveError);
             }

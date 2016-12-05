@@ -33,6 +33,7 @@
 
                 Auth.createAccount(vm.registerAccount).then(function () {
                     vm.success = 'OK';
+                    
                 }).catch(function (response) {
                     vm.success = null;
                     if (response.status === 400 && response.data === 'login already in use') {

@@ -32,6 +32,9 @@ public class UrlList implements Serializable {
     @Column(name = "visit_count")
     private Integer visitCount;
 
+    @ManyToOne
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -77,6 +80,19 @@ public class UrlList implements Serializable {
 
     public void setVisitCount(Integer visitCount) {
         this.visitCount = visitCount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public UrlList user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

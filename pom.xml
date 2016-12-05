@@ -10,10 +10,9 @@
     </parent>
 
     <groupId>urlshortner.gradproject</groupId>
-    <artifactId>url-shortner</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>URLShortner</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
-    <name>Url Shortner</name>
 
     <prerequisites>
         <maven>3.0.0</maven>
@@ -370,6 +369,7 @@
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
+    <finalName>URLShortner</finalName>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>

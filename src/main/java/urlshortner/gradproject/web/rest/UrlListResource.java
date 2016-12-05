@@ -2,8 +2,9 @@ package urlshortner.gradproject.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import urlshortner.gradproject.domain.UrlList;
-
+import urlshortner.gradproject.domain.User;
 import urlshortner.gradproject.repository.UrlListRepository;
+import urlshortner.gradproject.repository.UserRepository;
 import urlshortner.gradproject.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class UrlListResource {
         
     @Inject
     private UrlListRepository urlListRepository;
+    
+    @Inject
+    private UserRepository userRepository;
 
     /**
      * POST  /url-lists : Create a new urlList.
@@ -45,16 +49,14 @@ public class UrlListResource {
         if (urlList.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("urlList", "idexists", "A new urlList cannot already have an ID")).body(null);
         }
-        /*
-         * Ashish added
-         */
+        String user = urlshortner.gradproject.security.SecurityUtils.getCurrentUserLogin();
+        User userD = userRepository.findOneByLogin(user).get();
+        urlList.setUser(userD);
         String longUrl = urlList.getLongUrl();
         String shortUrl = shortenUrl(longUrl);
         urlList.setShortUrl(shortUrl);
         urlList.setVisitCount(0);
-        /*
-         * Ashish added
-         */
+        
         UrlList result = urlListRepository.save(urlList);
         return ResponseEntity.created(new URI("/api/url-lists/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("urlList", result.getId().toString()))
@@ -92,7 +94,7 @@ public class UrlListResource {
     @Timed
     public List<UrlList> getAllUrlLists() {
         log.debug("REST request to get all UrlLists");
-        List<UrlList> urlLists = urlListRepository.findAll();
+        List<UrlList> urlLists = urlListRepository.findByUserIsCurrentUser();
         return urlLists;
     }
 
@@ -127,9 +129,8 @@ public class UrlListResource {
         urlListRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("urlList", id.toString())).build();
     }
-/*
- * Ashish added
- */
+    
+    
     public String shortenUrl(String longUrl){
 		/*
 		 * 1. convert longUrl into 36 bit hash value
@@ -142,5 +143,6 @@ public class UrlListResource {
 		encodedUrl = Integer.toString(hashKey, 36);
 		return "http://localhost:8080/URLShortner/short/" +encodedUrl;
 	}
+    
 
 }

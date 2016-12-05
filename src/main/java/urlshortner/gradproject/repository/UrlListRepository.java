@@ -12,4 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface UrlListRepository extends JpaRepository<UrlList,Long> {
 
+    @Query("select urlList from UrlList urlList where urlList.user.login = ?#{principal.username}")
+    List<UrlList> findByUserIsCurrentUser();
+
 }
